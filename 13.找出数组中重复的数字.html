@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>找出数组中重复的数字</title>
+</head>
+
+<body>
+    <pre>给定一个长度为 n 的整数数组 nums，数组中所有的数字都在 0∼n−1 的范围内。
+数组中某些数字是重复的，但不知道有几个数字重复了，也不知道每个数字重复了几次。
+请找出数组中任意一个重复的数字。
+注意：如果某些数字不在 0∼n−1 的范围内，或数组中不包含重复数字，则返回 -1；
+样例
+给定 nums = [2, 3, 5, 4, 3, 2, 6, 7]。
+返回 2 或 3。
+</pre>
+</body>
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser.js"></script>
+<script type="text/babel">
+    // const nums = [2, 3, 5, 4, 3, 2, 6, 7];
+    const nums = [];
+
+    const duplicateInArray = function (nums) {
+        nums.sort((a, b) => a - b);
+        const len = nums.length;
+        const repeatArr = [];
+        if (len === 0 || nums[len - 1] > len - 1 || nums[0] < 0) { // 某些数字不在 0∼n−1 的范围内,则返回 -1
+            return -1;
+        }
+        nums.reduce((temp, item, index) => {
+            if (temp === item) {
+                repeatArr.push(temp);
+            }
+            return item;
+        });
+        console.log(repeatArr);
+        return repeatArr.length > 0 ? repeatArr[0] : -1;
+    };
+    console.log(duplicateInArray(nums));
+</script>
+
+</html>

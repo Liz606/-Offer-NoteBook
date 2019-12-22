@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>用两个栈实现队列</title>
+</head>
+
+<body>
+    <pre>
+    请用栈实现一个队列，支持如下四种操作：
+
+    push(x) – 将元素x插到队尾；
+    pop() – 将队首的元素弹出，并返回该元素；
+    peek() – 返回队首元素；
+    empty() – 返回队列是否为空；
+    注意：
+    
+    你只能使用栈的标准操作：push to top，peek/pop from top, size 和 is empty；
+    如果你选择的编程语言没有栈的标准库，你可以使用list或者deque等模拟栈的操作；
+    输入数据保证合法，例如，在队列为空时，不会进行pop或者peek等操作；
+    样例
+    MyQueue stack = new MyQueue();
+    
+    stack.push(1);
+    stack.push(2);
+    stack.peek();  // returns 1
+    stack.pop();   // returns 1
+    stack.empty(); // returns false
+</pre>
+</body>
+<script charset="utf-8" src="https://cdnjs.cloudflare.com/ajax/libs/babel-core/5.8.25/browser.js"></script>
+<script type="text/babel">
+    // //ES5
+    const MyQueue = function () {
+        this.stack = [];
+        this.helpStack = [];
+    };
+
+    MyQueue.prototype.push = function (x) {
+        let y = this.stack.push(x);
+        return y;
+    };
+
+    MyQueue.prototype.pop = function () {
+        let len = this.stack.length;
+        if (len > 0) {
+            for (let i = 0; i < len; i++) {
+                this.helpStack.push(this.stack.pop());
+            }
+            let y = this.helpStack.pop();
+            for (let i = 0; i < len - 1; i++) {
+                this.stack.push(this.helpStack.pop());
+            }
+            return y;
+        } else {
+            return null;
+        }
+    }
+
+    MyQueue.prototype.peek = function () {
+        if (this.stack.length > 0) {
+            return this.stack[0];
+        } else {
+            return null;
+        }
+    };
+
+    MyQueue.prototype.empty = function () {
+        if (this.stack.length === 0) {
+            return true;
+        } else {
+            return false;
+        }
+    };
+
+
+    // // ES6
+    // let MyQueue = class {
+    //     constructor() {
+    //         this.stack = [];
+    //         this.helpStack = [];
+    //     }
+    //     push(x) {
+    //         let y = this.stack.push(x);
+    //         return y;
+    //     }
+    //     pop() {
+    //         let len = this.stack.length;
+    //         if (len > 0) {
+    //             for (let i = 0; i < len; i++) {
+    //                 this.helpStack.push(this.stack.pop());
+    //             }
+    //             let y = this.helpStack.pop();
+    //             for (let i = 0; i < len - 1; i++) {
+    //                 this.stack.push(this.helpStack.pop());
+    //             }
+    //             return y;
+    //         } else {
+    //             return null;
+    //         }
+    //     }
+    //     peek() {
+    //         if (this.stack.length > 0) {
+    //             return this.stack[0];
+    //         } else {
+    //             return null;
+    //         }
+    //     }
+    //     empty() {
+    //         if (this.stack.length === 0) {
+    //             return true;
+    //         } else {
+    //             return false;
+    //         }
+    //     };
+    // };
+
+
+    const obj = new MyQueue();
+    console.log("push前", obj.stack);
+    obj.push(1);
+    obj.push(2);
+    obj.push(3);
+    obj.push(4);
+    console.log("push后", obj.stack);
+    console.log("=========================");
+    console.log("pop前", obj.stack);
+    console.log(obj.pop());
+    console.log(obj.pop());
+    console.log("pop两次后", obj.stack);
+    console.log("peek:", obj.peek());
+    console.log("empty:", obj.empty());
+
+</script>
+
+</html>
